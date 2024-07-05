@@ -8,7 +8,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 
 import { hireMeSchema, subscribeSchema } from './utils/validation';
-import { countryCodes, testimonials, blogs } from './utils/rowData'
+import { countryCodes,   } from './utils/rowData'
 
 
 function App() {
@@ -18,10 +18,11 @@ function App() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [messageLength, setMessageLength] = useState(200)
-  // const [blogs, setBlogs] = useState([])
-  // const [testimonials, setTestimonials] = useState([])
+  const [blogs, setBlogs] = useState([])
+  const [testimonials, setTestimonials] = useState([])
   const [loading, isLoading] = useState(false)
   const [subscribe, setSubscribe] = useState("")
+  const [selectedLink, setLink] = useState("Home")
   const apiUrl = process.env.REACT_APP_API_URL;
   const fileInputRef = useRef(null);
   const subscribeModalRef = useRef();
@@ -32,6 +33,12 @@ function App() {
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+
+  const urlObj = new URL(apiUrl);
+
+  urlObj.pathname = urlObj.pathname.replace('/portfolio', '');
+
+   urlObj.toString();
 
 
 
@@ -75,35 +82,36 @@ function App() {
 
 
 
-  // useEffect(() => {
-  //   const getBlogs = async () => {
-  //     try {
-  //       const response = await axios.get(`${apiUrl}/getBlogs`)
-  //       setBlogs(response?.data?.data)
-  //     } catch (error) {
-  //       console.log('error::: ', error);
-  //     }
-  //   }
+  useEffect(() => {
+    const getBlogs = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/getBlogs`)
+        setBlogs(response?.data?.data)
+      } catch (error) {
+        console.log('error::: ', error);
+      }
+    }
 
-  //   const getTestimonials = async () => {
-  //     try {
-  //       const response = await axios.get(`${apiUrl}/getTestimonials`)
-  //       setTestimonials(response?.data?.data)
-  //     } catch (error) {
-  //       console.log('error::: ', error);
-  //     }
-  //   }
+    const getTestimonials = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/getTestimonials`)
+        setTestimonials(response?.data?.data)
+      } catch (error) {
+        console.log('error::: ', error);
+      }
+    }
 
-  //   getBlogs()
-  //   getTestimonials()
-  // }, [])
+    getBlogs()
+    getTestimonials()
+  }, [])
+  console.log('urlObj::: ', urlObj);
 
   const renderTestimonials = (testimonialGroup) => (
     <div className="flex testimonial-group">
       {testimonialGroup.map((testimonial, index) => (
         <div key={index} className="testimonial">
-          {/* <img src={`${newUrl}/` + testimonial?.image} alt={testimonial.name} /> */}
-          <img src="assets/imgs/avatar3.jpg" alt={testimonial.name} />
+          <img src={`${urlObj}` + testimonial?.image} alt={testimonial.name} />
+          {/* <img src="assets/imgs/avatar3.jpg" alt={testimonial.name} /> */}
           <p>{testimonial.massage}</p>
           <h3>{testimonial.clientName}</h3>
         </div>
@@ -126,26 +134,26 @@ function App() {
           <a className="logo" href="#">Rahul's</a>
           <ul className={`nav ${isNavOpen ? 'show' : ''}`}>
             <li className="item">
-              <a className="link" href="#home">Home</a>
+              <a className={selectedLink === "Home" ? "link text-primary" : "link"} onClick={() => { setLink("Home") }} href="#home">Home</a>
             </li>
             <li className="item">
-              <a className="link" href="#about">About</a>
+              <a className={selectedLink === "About" ? "link text-primary" : "link"} onClick={() => { setLink("About") }} href="#about">About</a>
             </li>
             <li className="item">
-              <a className="link" href="#portfolio">Portfolio</a>
+              <a className={selectedLink === "Portfolio" ? "link text-primary" : "link"} onClick={() => { setLink("Portfolio") }} href="#portfolio">Portfolio</a>
             </li>
             <li className="item">
-              <a className="link" href="#testmonial">Testmonial</a>
+              <a className={selectedLink === "Testmonial" ? "link text-primary" : "link"}  onClick={() => { setLink("Testmonial") }} href="#testmonial">Testmonial</a>
             </li>
             <li className="item">
-              <a className="link" href="#blog">Blog</a>
+              <a className={selectedLink === "Blog" ? "link text-primary" : "link"} onClick={() => { setLink("Blog") }} href="#blog">Blog</a>
             </li>
             <li className="item">
-              <a className="link" href="#contact">Contact</a>
+              <a className={selectedLink === "Contact" ? "link text-primary" : "link"} onClick={() => { setLink("Contact") }} href="#contact">Contact</a>
             </li>
-            <li className="item ml-md-3">
+            {/* <li className="item ml-md-3">
               <a href="components.html" className="btn btn-primary">Components</a>
-            </li>
+            </li> */}
           </ul>
           <a id="nav-toggle" className={`hamburger hamburger--elastic ${isNavOpen ? 'is-active' : ''}`} onClick={toggleNav}>
             <div className="hamburger-box">
@@ -164,7 +172,7 @@ function App() {
             <span className="down">I'm Rahul Pambhar</span>
           </h1>
           <p className="header-subtitle">FULL-STACK WEB DEVELOPER</p>
-          <a href="#portfolio" className="btn btn-primary">Visit My Works</a>
+          <a href="#portfolio" className="btn btn-primary">Visit  Works</a>
         </div>
       </header> {/* end of page header */}
 
@@ -296,7 +304,7 @@ function App() {
           <div className="row">
             <div className="col-md-4" >
               <a href="#" className="portfolio-card">
-                <img src="assets/imgs/goldchain.png" className="portfolio-card-img"
+                <img src="assets/imgs/img-1.jpg" className="portfolio-card-img"
                   alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page" />
                 <span className="portfolio-card-overlay">
                   <span className="portfolio-card-caption">
@@ -308,7 +316,7 @@ function App() {
             </div>
             <div className="col-md-4">
               <a href="#" className="portfolio-card">
-                <img className="portfolio-card-img img-responsive rounded" src="assets/imgs/cheptar1.png"
+                <img className="portfolio-card-img img-responsive rounded" src="assets/imgs/img-2.jpg"
                   alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page" />
                 <span className="portfolio-card-overlay">
                   <span className="portfolio-card-caption">
@@ -320,7 +328,7 @@ function App() {
             </div>
             <div className="col-md-4">
               <a href="#" className="portfolio-card">
-                <img className="portfolio-card-img img-responsive rounded" src="assets/imgs/airconnect.png"
+                <img className="portfolio-card-img img-responsive rounded" src="assets/imgs/folio-1.jpg"
                   alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page" />
                 <span className="portfolio-card-overlay">
                   <span className="portfolio-card-caption">
@@ -748,8 +756,8 @@ function App() {
               return <div key={blog?.id}>
                 <div className="blog-card">
                   <div className="blog-card-header">
-                    {/* <img src={'http://localhost:3002/' + blog?.image} className="blog-card-img" */}
-                    <img src="assets/imgs/man.png" className="blog-card-img"
+                    <img src={`${urlObj}` + blog?.image} className="blog-card-img"
+                    // <img src="assets/imgs/man.png" className="blog-card-img"
                       alt="file not found" />
                   </div>
                   <div className="blog-card-body">
@@ -790,7 +798,7 @@ function App() {
                     message.length < 200 && setMessage(e.target.value)
                     message.length === 200 && e.target.value.length < 200 && setMessage(e.target.value)
                   }}></textarea>
-                <span>  {messageLength - message.length}  characters left </span>
+                {message.length > 0 && <span>  {messageLength - message.length}  characters left </span>}
               </div>
               <div className="form-group col-sm-12 mt-3">
                 <button type="button" disabled={loading} onClick={handleSubmit} className="btn btn-outline-primary rounded" >
@@ -805,8 +813,7 @@ function App() {
       {/* footer */}
       <div className="container">
         <footer className="footer">
-          <p className="mb-0">Copyright &copy; <a>DevCRUD</a> Distribution <a
-          >ThemeWagon</a>
+          <p className="mb-0">Copyright &copy; jhone Dao's 2024. All rights reserved.
           </p>
           <div className="social-links text-right m-auto ml-sm-auto">
             <a href="https://wa.me/918000555268" className="link"> <FontAwesomeIcon icon={faWhatsapp} /></a>
