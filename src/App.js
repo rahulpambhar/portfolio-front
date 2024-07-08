@@ -8,7 +8,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 
 import { hireMeSchema, subscribeSchema } from './utils/validation';
-import { countryCodes,   } from './utils/rowData'
+import { countryCodes, } from './utils/rowData'
 
 
 function App() {
@@ -29,16 +29,16 @@ function App() {
   const hireMeModalRef = useRef();
 
 
-  let newUrl = apiUrl.replace('/portfolio/', '/');
+  // let newUrl = apiUrl?.replace('/portfolio/', '/');
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
 
   const urlObj = new URL(apiUrl);
 
-  urlObj.pathname = urlObj.pathname.replace('/portfolio', '');
+  urlObj.pathname = urlObj?.pathname?.replace('/portfolio', '');
 
-   urlObj.toString();
+  urlObj?.toString();
 
 
 
@@ -80,8 +80,6 @@ function App() {
     }
   };
 
-
-
   useEffect(() => {
     const getBlogs = async () => {
       try {
@@ -104,14 +102,30 @@ function App() {
     getBlogs()
     getTestimonials()
   }, [])
-  console.log('urlObj::: ', urlObj);
+
+  const handleScroll = () => {
+    const sections = document.querySelectorAll('[id]');
+    const scrollPosition = window.scrollY + 50; // Adjust this value if needed
+
+    sections.forEach(section => {
+      if (scrollPosition >= section.offsetTop && scrollPosition < section.offsetTop + section.offsetHeight) {
+        setLink(section.getAttribute('id'));
+      }
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const renderTestimonials = (testimonialGroup) => (
     <div className="flex testimonial-group">
       {testimonialGroup.map((testimonial, index) => (
         <div key={index} className="testimonial">
           <img src={`${urlObj}` + testimonial?.image} alt={testimonial.name} />
-          {/* <img src="assets/imgs/avatar3.jpg" alt={testimonial.name} /> */}
           <p>{testimonial.massage}</p>
           <h3>{testimonial.clientName}</h3>
         </div>
@@ -125,6 +139,8 @@ function App() {
   }
 
 
+
+
   return (
     <div>
 
@@ -134,26 +150,24 @@ function App() {
           <a className="logo" href="#">Rahul's</a>
           <ul className={`nav ${isNavOpen ? 'show' : ''}`}>
             <li className="item">
-              <a className={selectedLink === "Home" ? "link text-primary" : "link"} onClick={() => { setLink("Home") }} href="#home">Home</a>
+              <a className={selectedLink === "home" ? "link text-primary" : "link"} onClick={() => { setLink("home") }} href="#home">Home</a>
             </li>
             <li className="item">
-              <a className={selectedLink === "About" ? "link text-primary" : "link"} onClick={() => { setLink("About") }} href="#about">About</a>
+              <a className={selectedLink === "about" ? "link text-primary" : "link"} onClick={() => { setLink("about") }} href="#about">About</a>
             </li>
             <li className="item">
-              <a className={selectedLink === "Portfolio" ? "link text-primary" : "link"} onClick={() => { setLink("Portfolio") }} href="#portfolio">Portfolio</a>
+              <a className={selectedLink === "portfolio" ? "link text-primary" : "link"} onClick={() => { setLink("portfolio") }} href="#portfolio">Portfolio</a>
             </li>
             <li className="item">
-              <a className={selectedLink === "Testmonial" ? "link text-primary" : "link"}  onClick={() => { setLink("Testmonial") }} href="#testmonial">Testmonial</a>
+              <a className={selectedLink === "testmonial" ? "link text-primary" : "link"} onClick={() => { setLink("testmonial") }} href="#testmonial">Testmonial</a>
             </li>
             <li className="item">
-              <a className={selectedLink === "Blog" ? "link text-primary" : "link"} onClick={() => { setLink("Blog") }} href="#blog">Blog</a>
+              <a className={selectedLink === "blog" ? "link text-primary" : "link"} onClick={() => { setLink("blog") }} href="#blog">Blog</a>
             </li>
             <li className="item">
-              <a className={selectedLink === "Contact" ? "link text-primary" : "link"} onClick={() => { setLink("Contact") }} href="#contact">Contact</a>
+              <a className={selectedLink === "contact" ? "link text-primary" : "link"} onClick={() => { setLink("contact") }} href="#contact">Contact</a>
             </li>
-            {/* <li className="item ml-md-3">
-              <a href="components.html" className="btn btn-primary">Components</a>
-            </li> */}
+
           </ul>
           <a id="nav-toggle" className={`hamburger hamburger--elastic ${isNavOpen ? 'is-active' : ''}`} onClick={toggleNav}>
             <div className="hamburger-box">
@@ -422,6 +436,29 @@ function App() {
               <button className="btn btn-primary mt-3 pricing-card-btn" data-toggle="modal" data-target="#subscribeModal" onClick={() => setSubscribe("premium")}>Subscribe</button>
             </div>
 
+            <div className="pricing-card border-white" style={{ backgroundColor: '#e0dff7' }}>
+              <div className="pricing-card-header">
+                <img className="pricing-card-icon" src="assets/imgs/infinity.svg"
+                  alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page" />
+              </div>
+              <div className="pricing-card-body">
+                <h6 className="pricing-card-title">Infiny</h6>
+                <div className="pricing-card-list">
+                  <p style={{ color: '#014f06' }}>customize delivery</p>
+                  <p style={{ color: '#014f06' }}>Infiny pages</p>
+                  <p style={{ color: '#014f06' }}>Content upload</p>
+                  <p style={{ color: '#014f06' }}>Design customization</p>
+                  <p style={{ color: '#014f06' }}>Responsive design</p>
+                  <p style={{ color: '#014f06' }}>Source code</p>
+                  <p style={{ color: '#014f06' }} >Detailed code comments</p>
+                </div>
+              </div>
+              <div className="pricing-card-footer">
+                <span>$</span> {" "}
+                <span>10000...</span>
+              </div>
+              <button className="btn btn-primary mt-3 pricing-card-btn" data-toggle="modal" data-target="#subscribeModal" onClick={() => setSubscribe("premium")}>Subscribe</button>
+            </div>
           </div>{/* end of row */}
         </div> {/* end of container */}
       </section > {/* end of pricing section */}
@@ -731,7 +768,6 @@ function App() {
         <div className="container text-center">
           <p className="section-subtitle">What Think Client About Me ?</p>
           <h6 className="section-title mb-6">Testmonial</h6>
-
           <div className="row">
             <div className="col-md-6">
               <Carousel showArrows={true} showThumbs={false} infiniteLoop={true}>
@@ -757,7 +793,7 @@ function App() {
                 <div className="blog-card">
                   <div className="blog-card-header">
                     <img src={`${urlObj}` + blog?.image} className="blog-card-img"
-                    // <img src="assets/imgs/man.png" className="blog-card-img"
+                      // <img src="assets/imgs/man.png" className="blog-card-img"
                       alt="file not found" />
                   </div>
                   <div className="blog-card-body">
@@ -766,7 +802,7 @@ function App() {
                       <a href="#">By: {blog?.blogger}</a>
                     </p>
                     <p>{blog?.description}</p>
-                    <a href="#" className="blog-card-link">Read more <i className="ti-angle-double-right"></i></a>
+                    {/* <a href="#" className="blog-card-link">Read more <i className="ti-angle-double-right"></i></a> */}
                   </div>
                 </div>
               </div>
@@ -781,7 +817,8 @@ function App() {
         <div className="container text-center">
           <p className="section-subtitle">How can you communicate?</p>
           <h6 className="section-title mb-5">Contact Me</h6>
-          MO : + 91 8000555268 <br />
+          MO : + 91 8000555268  <br />
+          <>Email : pambharrahul@gmail.com </> <br />
           or
           {/* contact form */}
           <form className="contact-form col-md-10 col-lg-8 m-auto">
@@ -813,7 +850,7 @@ function App() {
       {/* footer */}
       <div className="container">
         <footer className="footer">
-          <p className="mb-0">Copyright &copy; jhone Dao's 2024. All rights reserved.
+          <p className="mb-0">Copyright &copy; RahulPambhar 2024. All rights reserved.
           </p>
           <div className="social-links text-right m-auto ml-sm-auto">
             <a href="https://wa.me/918000555268" className="link"> <FontAwesomeIcon icon={faWhatsapp} /></a>
