@@ -4995,7 +4995,7 @@ input[type="button"].btn-block {
 }
 
 .navbar-dark .navbar-brand {
-  color: #fff;
+  color: #603131;
 }
 
 .navbar-dark .navbar-brand:hover, .navbar-dark .navbar-brand:focus {
@@ -11637,7 +11637,9 @@ pre .code {
 }
 
 .custom-navbar .logo {
-  font-size: calc(20px + (30 - 20) * ((100vw - 300px) / (1300 - 300)));
+  /* font-size: calc(20px + (30 - 20) * ((100vw - 300px) / (1300 - 300))); */
+  width: 70px;
+  height: 50px;
   text-decoration: none;
   color: #fff;
 }
@@ -11978,7 +11980,7 @@ pre .code {
   display: -webkit-flex;
   display: flex;
   min-height: 70px;
-  border-top: 1px solid #dee2e6;
+  border-top: 1px solid #6f42c1;
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
