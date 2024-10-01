@@ -33,7 +33,7 @@ const What_I_Did = () => {
                     </div>
                     <div className="col-md-4"  style={{ maxWidth: '400px', maxHeight: '400px'  }} >
                         <a href="https://www.facepdf.com/convert-to-pdf"  style={{ maxWidth: '400px' , maxHeight: '400px'  }}  className="portfolio-card border img-responsive rounded">
-                            <img className="portfolio-card-img img-responsive rounded" src="assets/imgs/onlonepdf.png"
+                            <img className="portfolio-card-img  rounded" src="assets/imgs/onlonepdf.png"
                                 alt="Download free bootstrap 4 landing page, free bootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, meyawo Landing page" />
                             <span className="portfolio-card-overlay">
                                 <span className="portfolio-card-caption">
